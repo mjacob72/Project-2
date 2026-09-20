@@ -44,7 +44,7 @@ In this part, we are going to practice creating functions.
 
 The exponential of a number can be written as an infinite series expansion of the form $$
 \exp(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
-$$ Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.
+Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.
 
 Write a function that computes the exponential of a number using the truncated series expansion. The function should take two arguments:
 
@@ -68,15 +68,35 @@ Include at least one example of output using your function.
 
 ```{r}
 Exp <- function(x, k) {
-    # Add your solution here
+    val <- 1
+    if (k > 0){
+        for (i in seq_len(k)) {
+            val <- val + ((x^i)/factorial(i))
+        }
+    }
+    return(val)
 }
+print("Test using Exp()")
+Exp(2,5)
+print("Test with exp()")
+exp(2)
+
+print("Test using Exp()")
+Exp(c(3,5,7),10)
+print("Test with exp()")
+exp(3)
+exp(5)
+exp(7)
+
+
+
 ```
 
 ### Part 1B: Sample mean and sample standard deviation
 
 Next, write two functions called `sample_mean()` and `sample_sd()` that takes as input a vector of data of length $N$ and calculates the sample average and sample standard deviation for the set of $N$ observations.
 
-$$
+
 \bar{x} = \frac{1}{N} \sum_{i=1}^n x_i
 $$ $$
 s = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (x_i - \overline{x})^2}
@@ -170,6 +190,9 @@ if (!file.exists(here("data", "tuesdata_rainfall.RDS"))) {
     rainfall <- tuesdata$rainfall
     temperature <- tuesdata$temperature
 
+    if (!dir.exists(here("data"))) {
+        dir.create(here("data"), recursive = TRUE)
+    }
     # save the files to RDS objects
     saveRDS(tuesdata$rainfall, file = here("data", "tuesdata_rainfall.RDS"))
     saveRDS(tuesdata$temperature, file = here("data", "tuesdata_temperature.RDS"))
