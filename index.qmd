@@ -44,7 +44,7 @@ In this part, we are going to practice creating functions.
 
 The exponential of a number can be written as an infinite series expansion of the form $$
 \exp(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
-Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.
+$$Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.
 
 Write a function that computes the exponential of a number using the truncated series expansion. The function should take two arguments:
 
@@ -76,14 +76,14 @@ Exp <- function(x, k) {
     }
     return(val)
 }
-print("Test using Exp()")
+# Test using Exp()
 Exp(2,5)
-print("Test with exp()")
+# Confirmation with exp()
 exp(2)
 
-print("Test using Exp()")
+# Test using Exp()
 Exp(c(3,5,7),10)
-print("Test with exp()")
+# Confirmation with exp()
 exp(3)
 exp(5)
 exp(7)
@@ -97,7 +97,8 @@ exp(7)
 Next, write two functions called `sample_mean()` and `sample_sd()` that takes as input a vector of data of length $N$ and calculates the sample average and sample standard deviation for the set of $N$ observations.
 
 
-\bar{x} = \frac{1}{N} \sum_{i=1}^n x_i
+$$\bar{x} = \frac{1}{N} \sum_{i=1}^n x_i
+
 $$ $$
 s = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (x_i - \overline{x})^2}
 $$ As a primer, the $\sum_{i = 1}^3 x_i$ is equivalent to doing the sum of $x_i$ starting from $i = 1$, increasing $i$ by 1 each then, up to when $i = 3$. That is, $x_1 + x_2 + x_3$.
