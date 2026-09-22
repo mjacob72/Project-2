@@ -89,7 +89,6 @@ exp(5)
 exp(7)
 
 
-
 ```
 
 ### Part 1B: Sample mean and sample standard deviation
@@ -113,12 +112,39 @@ Include at least one example of output using your functions.
 
 ```{r}
 sample_mean <- function(x) {
-    # Add your solution here
+    tot_sum <- sum(x)
+    big_n <- length(x)
+    averg <- tot_sum/big_n
+    return(averg)
 }
 
-sample_sd <- function(x) {
-    # Add your solution here
+#Test using sample_mean()
+sample_mean(c(2,6,3,4,5,9,1,5,2,4,8))
+# Confirmation using mean()
+mean(c(2,6,3,4,5,9,1,5,2,4,8))
+# Test using sample_mean()
+sample_mean(c(324,334,354,345,341,322,347,362,342))
+# Confirmation using mean()
+mean(c(324,334,354,345,341,322,347,362,342))
+sample_sd <- function(inp) {
+    smpl_m <- sample_mean(inp)
+    big_n <- length(inp)
+    
+    st_dev <- sum(lapply(inp,function(x) (x - sample_mean)^2))/(big_n - 1)
+    return(st_dev)
 }
+
+#Test using sample_sd
+sample_sd(c(2,6,3,4,5,9,1,5,2,4,8))
+
+#Confirmation using sd
+sd(c(2,6,3,4,5,9,1,5,2,4,8))
+
+#Test using sample_sd
+sample_sd(c(324,334,354,345,341,322,347,362,342))
+
+#Confirmation using sd
+sd(c(324,334,354,345,341,322,347,362,342))
 ```
 
 ### Part 1C: Confidence intervals
