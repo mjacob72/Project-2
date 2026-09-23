@@ -175,8 +175,26 @@ t_score <- qt(p = alpha / 2, df = degrees_freedom, lower.tail = FALSE)
 
 ```{r}
 calculate_CI <- function(x, conf = 0.95) {
-    # Add your solution here
+    alpha <- (1 - conf)
+    degrees_freedom <- (length(x) - 1)
+    t_score <- qt(p = alpha / 2, df = degrees_freedom, lower.tail = FALSE)
+    adjusted_tscore <- t_score * (sample_sd(x)/sqrt(length(x)))
+    lower <- sample_mean(x) - adjusted_tscore
+    upper <- sample_mean(x) + adjusted_tscore
+    return(c(lower, upper)) 
 }
+
+# Test 
+fit_test <- c(2,6,3,4,5,9,1,5,2,4,8,7,2,3,6,5,8,1,2,5,3,7,8,4,5,2,3,7,4,9,8,2,4,5,3,5,1,2,7,6,3,4,5,8,6,8,7,4,3,4,9,4,5,6,3,5,2,4)
+calculate_CI(fit_test, conf = 0.95)
+
+# Confirmation test
+#try_attempt <- t.test(fit_test)
+#try_attempt$conf.int[1] # lower bound
+#try_attempt$conf.int[2] # upper bound
+test_attempt <- lm(fit_test ~ 1)
+confint(test_attempt, level = 0.95)
+
 ```
 
 Include example of output from your (function showing the output when using two different levels of `conf`.
