@@ -20,7 +20,7 @@ categories: [project 2, projects]
 
 **Due date: October 4th at 11:59pm**
 
-The goal of this assignment is to practice designing and writing functions along with practicing our tidyverse skills that we learned in our previous project. Writing functions involves thinking about how code should be divided up and what the interface/arguments should be. In addition, you need to think about what the function will return as output.
+The goal of this assignment is to practice designing and writing functions along with practicing our tidyverse skills that we learned in our previous project. Writing functions involves thinking about how code should be divided up and what the interface/arguments should be. In addition, you need to think about what the (function will return as output.
 
 ### To submit your project
 
@@ -46,28 +46,28 @@ The exponential of a number can be written as an infinite series expansion of th
 \exp(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
 $$Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.
 
-Write a function that computes the exponential of a number using the truncated series expansion. The function should take two arguments:
+Write a (function that computes the exponential of a number using the truncated series expansion. The (function should take two arguments:
 
 -   `x`: the number to be exponentiated
 
 -   `k`: the number of terms to be used in the series expansion beyond the constant 1. The value of `k` is always $\geq 1$.
 
-For example, if $k = 1$, then the `Exp` function should return the number $1 + x$. If $k = 2$, then you should return the number $1 + x + x^2/2!$.
+For example, if $k = 1$, then the `Exp` (function should return the number $1 + x$. If $k = 2$, then you should return the number $1 + x + x^2/2!$.
 
-Include at least one example of output using your function.
+Include at least one example of output using your (function.
 
 ::: callout-note
 -   You can assume that the input value `x` will always be a *single* number.
 
 -   You can assume that the value `k` will always be an integer $\geq 1$.
 
--   Do not use the `exp()` function in R.
+-   Do not use the `exp()` (function in R.
 
--   The `factorial()` function can be used to compute factorials.
+-   The `factorial()` (function can be used to compute factorials.
 :::
 
 ```{r}
-Exp <- function(x, k) {
+test_exp <- function(x, k) {
     val <- 1
     if (k > 0){
         for (i in seq_len(k)) {
@@ -76,14 +76,16 @@ Exp <- function(x, k) {
     }
     return(val)
 }
-# Test using Exp()
-Exp(2,5)
-# Confirmation with exp()
+
+# Test using test_exp
+test_exp(2,5)
+
+# Confirmation with exp
 exp(2)
 
-# Test using Exp()
-Exp(c(3,5,7),10)
-# Confirmation with exp()
+#Test using test_exp
+test_exp(c(3,5,7),10)
+# Confirmation with exp
 exp(3)
 exp(5)
 exp(7)
@@ -118,19 +120,20 @@ sample_mean <- function(x) {
     return(averg)
 }
 
-#Test using sample_mean()
+#Test using sample_mean
 sample_mean(c(2,6,3,4,5,9,1,5,2,4,8))
-# Confirmation using mean()
+# Confirmation using mean
 mean(c(2,6,3,4,5,9,1,5,2,4,8))
-# Test using sample_mean()
+# Test using sample_mean
 sample_mean(c(324,334,354,345,341,322,347,362,342))
-# Confirmation using mean()
+# Confirmation using mean
 mean(c(324,334,354,345,341,322,347,362,342))
+
 sample_sd <- function(inp) {
     smpl_m <- sample_mean(inp)
     big_n <- length(inp)
     
-    st_dev <- sum(lapply(inp,function(x) (x - sample_mean)^2))/(big_n - 1)
+    st_dev <- sqrt(sum((inp - smpl_m)^2)/(big_n - 1))
     return(st_dev)
 }
 
@@ -151,7 +154,7 @@ sd(c(324,334,354,345,341,322,347,362,342))
 
 Next, write a function called `calculate_CI()` that:
 
-1.  There should be two inputs to the `calculate_CI()`. First, it should take as input a vector of data of length $N$. Second, the function should also have a `conf` ($=1-\alpha$) argument that allows the confidence interval to be adapted for different $\alpha$.
+1.  There should be two inputs to the `calculate_CI()`. First, it should take as input a vector of data of length $N$. Second, the (function should also have a `conf` ($=1-\alpha$) argument that allows the confidence interval to be adapted for different $\alpha$.
 
 2.  Calculates a confidence interval (CI) (e.g. a 95% CI) for the estimate of the mean in the population. If you are not familiar with confidence intervals, it is an interval that contains the population parameter with probability $1-\alpha$ taking on this form
 
@@ -176,10 +179,10 @@ calculate_CI <- function(x, conf = 0.95) {
 }
 ```
 
-Include example of output from your function showing the output when using two different levels of `conf`.
+Include example of output from your (function showing the output when using two different levels of `conf`.
 
 ::: callout-note
-If you want to check if your function output matches an existing function in R, consider a vector $x$ of length $N$ and see if the following two code chunks match.
+If you want to check if your (function output matches an existing (function in R, consider a vector $x$ of length $N$ and see if the following two code chunks match.
 
 ```{r, eval=FALSE}
 calculate_CI(x, conf = 0.95)
@@ -257,12 +260,12 @@ Here is a data dictionary for what all the column names mean:
 Using the `rainfall` and `temperature` data, perform the following steps and create a new data frame called `df`:
 
 1.  Start with `rainfall` dataset and drop any rows with NAs.
-2.  Create a new column titled `date` that combines the columns `year`, `month`, `day` into one column separated by "-". (e.g. "2020-01-01"). This column should not be a character, but should be recognized as a date. (**Hint**: check out the `ymd()` function in `lubridate` R package). You will also want to add a column that just keeps the `year`.
+2.  Create a new column titled `date` that combines the columns `year`, `month`, `day` into one column separated by "-". (e.g. "2020-01-01"). This column should not be a character, but should be recognized as a date. (**Hint**: check out the `ymd()` (function in `lubridate` R package). You will also want to add a column that just keeps the `year`.
 3.  Using the `city_name` column, convert the city names (character strings) to all upper case.
 4.  Join this wrangled rainfall dataset with the `temperature` dataset such that it includes only observations that are in both data frames. (**Hint**: there are two keys that you will need to join the two datasets together). (**Hint**: If all has gone well thus far, you should have a dataset with 83,964 rows and 13 columns).
 
 ::: callout-note
--   You may need to use functions outside these packages to obtain this result, in particular you may find the functions `drop_na()` from `tidyr` and `str_to_upper()` function from `stringr` useful.
+-   You may need to use functions outside these packages to obtain this result, in particular you may find the functions `drop_na()` from `tidyr` and `str_to_upper()` (function from `stringr` useful.
 :::
 
 ```{r}
@@ -276,14 +279,14 @@ In this part, we will practice our `ggplot2` plotting skills within the tidyvers
 1.  An overall title for the plot and a subtitle summarizing key trends that you found. Also include a caption in the figure.
 2.  There should be an informative x-axis and y-axis label.
 
-Consider playing around with the `theme()` function to make the figure shine, including playing with background colors, font, etc.
+Consider playing around with the `theme()` (function to make the figure shine, including playing with background colors, font, etc.
 
 ### Part 3A: Plotting temperature data over time
 
 Use the functions in `ggplot2` package to make a line plot of the max and min temperature (y-axis) over time (x-axis) for each city in our wrangled data from Part 2. You should only consider years 2014 and onwards. For full credit, your plot should include:
 
 1.  For a given city, the min and max temperature should both appear on the plot, but they should be two different colors.
-2.  Use a facet function to facet by `city_name` to show all cities in one figure.
+2.  Use a facet (function to facet by `city_name` to show all cities in one figure.
 
 ```{r}
 # Add your solution here
@@ -308,23 +311,23 @@ df %>%
 
 While this code is useful, it only provides us information on one city in one year. We could cut and paste this code to look at other cities/years, but that can be error prone and just plain messy.
 
-The aim here is to **design** and **implement** a function that can be re-used to visualize all of the data in this dataset.
+The aim here is to **design** and **implement** a (function that can be re-used to visualize all of the data in this dataset.
 
 1.  There are 2 aspects that may vary in the dataset: The **city_name** and the **year**. Note that not all combinations of `city_name` and `year` have measurements.
 
-2.  Your function should take as input two arguments **city_name** and **year**.
+2.  Your (function should take as input two arguments **city_name** and **year**.
 
-3.  Given the input from the user, your function should return a **single** histogram for that input. Furthermore, the data should be **readable** on that plot so that it is in fact useful. It should be possible visualize the entire dataset with your function (through repeated calls to your function).
+3.  Given the input from the user, your (function should return a **single** histogram for that input. Furthermore, the data should be **readable** on that plot so that it is in fact useful. It should be possible visualize the entire dataset with your (function (through repeated calls to your (function).
 
-4.  If the user enters an input that does not exist in the dataset, your function should catch that and report an error (via the `stop()` function).
+4.  If the user enters an input that does not exist in the dataset, your (function should catch that and report an error (via the `stop()` (function).
 
 For this section,
 
-1.  Write a short description of how you chose to design your function and why.
+1.  Write a short description of how you chose to design your (function and why.
 
-2.  Present the code for your function in the R markdown document.
+2.  Present the code for your (function in the R markdown document.
 
-3.  Include at least one example of output from your function.
+3.  Include at least one example of output from your (function.
 
 ```{r}
 # Add your solution here
@@ -337,7 +340,7 @@ For this section,
 In this part, we will apply the functions we wrote in Part 1 to our rainfall data starting with our wrangled `df` data from Part 2.
 
 1.  First, filter for only years including 2014 and onwards.
-2.  For a given city and for a given year, calculate the sample mean (using your function `sample_mean()`), the sample standard deviation (using your function `sample_sd()`), and a 95% confidence interval for the average rainfall (using your function `calculate_CI()`). Specifically, you should add two columns in this summarized dataset: a column titled `lower_bound` and a column titled `upper_bound` containing the lower and upper bounds for you CI that you calculated (using your function `calculate_CI()`).
+2.  For a given city and for a given year, calculate the sample mean (using your (function `sample_mean()`), the sample standard deviation (using your (function `sample_sd()`), and a 95% confidence interval for the average rainfall (using your (function `calculate_CI()`). Specifically, you should add two columns in this summarized dataset: a column titled `lower_bound` and a column titled `upper_bound` containing the lower and upper bounds for you CI that you calculated (using your (function `calculate_CI()`).
 3.  Call this summarized dataset `rain_df`.
 
 ```{r}
