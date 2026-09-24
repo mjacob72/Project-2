@@ -287,7 +287,17 @@ Using the `rainfall` and `temperature` data, perform the following steps and cre
 :::
 
 ```{r}
-# Add your solution here
+library(tidyverse)
+library(dplyr)
+library(here)
+library(lubridate)
+
+df <- rainfall %>% 
+    drop_na() %>%
+    
+
+
+
 ```
 
 # Part 3: Data visualization
