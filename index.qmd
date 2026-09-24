@@ -294,9 +294,14 @@ library(lubridate)
 
 df <- rainfall %>% 
     drop_na() %>%
-    
+    mutate("date" = make_date(year, month, day)) %>%
+    select(!c(day, month)) %>%
+    mutate(city_name = toupper(city_name)) 
 
+obj <- df %>%
+    inner_join(temperature, by = c("city_name", "date"), relationship = "many-to-many")
 
+obj
 
 ```
 
