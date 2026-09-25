@@ -319,12 +319,41 @@ Consider playing around with the `theme()` (function to make the figure shine, i
 Use the functions in `ggplot2` package to make a line plot of the max and min temperature (y-axis) over time (x-axis) for each city in our wrangled data from Part 2. You should only consider years 2014 and onwards. For full credit, your plot should include:
 
 1.  For a given city, the min and max temperature should both appear on the plot, but they should be two different colors.
-2.  Use a facet (function to facet by `city_name` to show all cities in one figure.
+2.  Use a facet function to facet by `city_name` to show all cities in one figure.
 
 ```{r}
-# Add your solution here
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+# Want to merge across by year and identify min and max for temp
+simpl_temp <- obj %>%
+    filter(year >= 2014) %>%
+    group_by(year, city_name) %>%
+    summarise(
+        min_temp = min(temperature, na.rm = TRUE),
+        max_temp = max(temperature, na.rm = TRUE),
+        .groups = "drop"
+    )
+
+temp_long <- simpl_temp %>%
+    pivot_longer(
+        -c(city_name, year),
+        names_to = "min_max",
+        values_to = "temperature"
+    )
+
+ggplot(temp_long, aes(x = year, y = temperature, color = min_max))+
+geom_point()+
+geom_line()+
+facet_wrap(~ city_name)+
+theme_light()
+
 ```
 
+```{r}
+mtcars$
+inst
+```
 ### Part 3B: Plotting rainfall over time
 
 Here we want to explore the distribution of rainfall (log scale) with histograms for a given city (indicated by the `city_name` column) for a given year (indicated by the `year` column) so we can make some exploratory plots of the data.
@@ -344,23 +373,23 @@ df %>%
 
 While this code is useful, it only provides us information on one city in one year. We could cut and paste this code to look at other cities/years, but that can be error prone and just plain messy.
 
-The aim here is to **design** and **implement** a (function that can be re-used to visualize all of the data in this dataset.
+The aim here is to **design** and **implement** a function that can be re-used to visualize all of the data in this dataset.
 
 1.  There are 2 aspects that may vary in the dataset: The **city_name** and the **year**. Note that not all combinations of `city_name` and `year` have measurements.
 
-2.  Your (function should take as input two arguments **city_name** and **year**.
+2.  Your function should take as input two arguments **city_name** and **year**.
 
-3.  Given the input from the user, your (function should return a **single** histogram for that input. Furthermore, the data should be **readable** on that plot so that it is in fact useful. It should be possible visualize the entire dataset with your (function (through repeated calls to your (function).
+3.  Given the input from the user, your function should return a **single** histogram for that input. Furthermore, the data should be **readable** on that plot so that it is in fact useful. It should be possible visualize the entire dataset with your function (through repeated calls to your function).
 
-4.  If the user enters an input that does not exist in the dataset, your (function should catch that and report an error (via the `stop()` (function).
+4.  If the user enters an input that does not exist in the dataset, your function should catch that and report an error (via the `stop()` function).
 
 For this section,
 
-1.  Write a short description of how you chose to design your (function and why.
+1.  Write a short description of how you chose to design your function and why.
 
-2.  Present the code for your (function in the R markdown document.
+2.  Present the code for your function in the R markdown document.
 
-3.  Include at least one example of output from your (function.
+3.  Include at least one example of output from your function.
 
 ```{r}
 # Add your solution here
@@ -373,7 +402,7 @@ For this section,
 In this part, we will apply the functions we wrote in Part 1 to our rainfall data starting with our wrangled `df` data from Part 2.
 
 1.  First, filter for only years including 2014 and onwards.
-2.  For a given city and for a given year, calculate the sample mean (using your (function `sample_mean()`), the sample standard deviation (using your (function `sample_sd()`), and a 95% confidence interval for the average rainfall (using your (function `calculate_CI()`). Specifically, you should add two columns in this summarized dataset: a column titled `lower_bound` and a column titled `upper_bound` containing the lower and upper bounds for you CI that you calculated (using your (function `calculate_CI()`).
+2.  For a given city and for a given year, calculate the sample mean (using your function `sample_mean()`), the sample standard deviation (using your function `sample_sd()`), and a 95% confidence interval for the average rainfall (using your function `calculate_CI()`). Specifically, you should add two columns in this summarized dataset: a column titled `lower_bound` and a column titled `upper_bound` containing the lower and upper bounds for you CI that you calculated (using your function `calculate_CI()`).
 3.  Call this summarized dataset `rain_df`.
 
 ```{r}
