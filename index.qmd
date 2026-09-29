@@ -414,17 +414,30 @@ city_year <- function(cityname, recorded_year) {
     
     # Create histogram
     ggplot(subset_data, aes(log(rainfall)))+
-    geom_histogram(fill = "blue", color = "gray")+
-    labs(title = paste("Total log(rain) in", cityname, "for", recorded_year))
+    geom_histogram(fill = "blue", color = "gray", bins = 15)+
+    labs(title = paste("Total log(rainfall) in", cityname, "for", recorded_year))
 }
+```
+
+1. I designed my function to take in a string and year, convert the string to uppercase then filter to only look at the subset of data associated with that year and city. I did this as it isolates the necessary variables needed to perform the analysis. I then checked if the subset is empty, which if it is, then the function stops and calls an error. Assuming everything is met in the above, the function then plots a histogram which allows for the title to be changed based on the city and year put into the function. The histogram displays the distribution such that the individual columns are visible and there is an appropriate amount of columns for the majority of the data pairs available. 
 
 # Positive control test
+```{r}
 city_year("PERTH", 2000)
-city_year("perth", 2000)
-
-# Error test (Commented out for rendering)
-# city_year("PERTH", 2053)
+city_year("Sydney", 2014)
 ```
+
+# Error test (eval = FALSE to allow page to render)
+```{r, eval = FALSE}
+city_year("PERTH", 2053)
+```
+
+
+# Example output
+> city_year("PERTH", 2053) <br>
+Error: <br>
+! No measurements found for city_name = PERTH and year = 2053 <br>
+Show Traceback <br>
 
 # Part 4: Apply functions and plot
 
@@ -446,9 +459,6 @@ rain_df <- df %>%
         lower_bound = round(calculate_CI(rainfall, conf = 0.95)[1], digits = 2),
         upper_bound = round(calculate_CI(rainfall, conf = 0.95)[2], digits = 2)
     )
-
-    
-
 ```
 
 ### Part 4B: Tasks
@@ -456,7 +466,16 @@ rain_df <- df %>%
 Using the `rain_df`, plots the estimates of mean rainfall and the 95% confidence intervals on the same plot. There should be a separate faceted plot for each city. Think about using `ggplot()` with both `geom_point()` (and `geom_line()` to connect the points) for the means and `geom_errorbar()` for the lower and upper bounds of the confidence interval. Check <https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html> and/or the official documentation <https://ggplot2.tidyverse.org/reference/geom_linerange.html> for examples of how to use `geom_errorbar()`.
 
 ```{r}
-# Add your solution here
+as.factor(rain_df$city_name)
+ggplot(
+    rain_df, 
+    aes(x = year, y = avg_rainfall, ymin = lower_bound, ymax = upper_bound, color = city_name)
+)+
+    geom_errorbar()+
+    geom_point(aes(x = year, y = avg_rainfall))+
+    geom_line()+
+    facet_grid(~ city_name)
+    
 ```
 
 # R session information

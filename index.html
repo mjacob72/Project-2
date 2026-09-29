@@ -363,13 +363,13 @@ Note
 <li>Returns a named vector of length 2, where the first value is the <code>lower_bound</code>, the second value is the <code>upper_bound</code>.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>calculate_CI <span class="ot">&lt;-</span> <span class="cf">function</span>(valu, <span class="at">conf =</span> <span class="fl">0.95</span>) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>calculate_CI <span class="ot">&lt;-</span> <span class="cf">function</span>(inp, <span class="at">conf =</span> <span class="fl">0.95</span>) {</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    alpha <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> conf)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    degrees_freedom <span class="ot">&lt;-</span> (<span class="fu">length</span>(valu) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    degrees_freedom <span class="ot">&lt;-</span> (<span class="fu">length</span>(inp) <span class="sc">-</span> <span class="dv">1</span>)</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p =</span> alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="at">df =</span> degrees_freedom, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    adjusted_tscore <span class="ot">&lt;-</span> t_score <span class="sc">*</span> (<span class="fu">sample_sd</span>(valu)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(valu)))</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    lower <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(valu) <span class="sc">-</span> adjusted_tscore</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    upper <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(valu) <span class="sc">+</span> adjusted_tscore</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    adjusted_tscore <span class="ot">&lt;-</span> t_score <span class="sc">*</span> (<span class="fu">sample_sd</span>(inp)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(inp)))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    lower <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(inp) <span class="sc">-</span> adjusted_tscore</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    upper <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(inp) <span class="sc">+</span> adjusted_tscore</span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(lower, upper)) </span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -406,9 +406,9 @@ Note
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The two datasets for this part of the assignment comes from <a href="https://www.tidytuesday.com">TidyTuesday</a>. Specifically, we will use the following data from January 2020, which I have provided for you below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">"2020-01-07"</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>rainfall <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>rainfall</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>temperature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tuesdata &lt;- tidytuesdayR::tt_load("2020-01-07")</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#rainfall &lt;- tuesdata$rainfall</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">#temperature &lt;- tuesdata$temperature</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>However, to avoid re-downloading data, we will check to see if those files already exist using an <code>if()</code> statement:</p>
 <div class="cell">
@@ -649,37 +649,51 @@ Note
 <span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create histogram</span></span>
 <span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(subset_data, <span class="fu">aes</span>(<span class="fu">log</span>(rainfall)))<span class="sc">+</span></span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()<span class="sc">+</span></span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Total log(rain) in"</span>, cityname, <span class="st">"for"</span>, recorded_year))</span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive control test</span></span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="fu">city_year</span>(<span class="st">"PERTH"</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">bins =</span> <span class="dv">15</span>)<span class="sc">+</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Total log(rainfall) in"</span>, cityname, <span class="st">"for"</span>, recorded_year))</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="1">
+<li>I designed my function to take in a string and year, convert the string to uppercase then filter to only look at the subset of data associated with that year and city. I did this as it isolates the necessary variables needed to perform the analysis. I then checked if the subset is empty, which if it is, then the function stops and calls an error. Assuming everything is met in the above, the function then plots a histogram which allows for the title to be changed based on the city and year put into the function. The histogram displays the distribution such that the individual columns are visible and there is an appropriate amount of columns for the majority of the data pairs available.</li>
+</ol>
+</section>
+</section>
+<section id="positive-control-test" class="level1">
+<h1>Positive control test</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">city_year</span>(<span class="st">"PERTH"</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">city_year</span>(<span class="st">"Sydney"</span>, <span class="dv">2014</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<pre><code>Warning: Removed 430 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">city_year</span>(<span class="st">"perth"</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Error test (Commented out for rendering)</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># city_year("PERTH", 2053)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
+<section id="error-test-eval-false-to-allow-page-to-render" class="level1">
+<h1>Error test (eval = FALSE to allow page to render)</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">city_year</span>(<span class="st">"PERTH"</span>, <span class="dv">2053</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-output" class="level1">
+<h1>Example output</h1>
+<blockquote class="blockquote">
+<p>city_year(“PERTH”, 2053) <br> Error: <br> ! No measurements found for city_name = PERTH and year = 2053 <br> Show Traceback <br></p>
+</blockquote>
 </section>
 <section id="part-4-apply-functions-and-plot" class="level1">
 <h1>Part 4: Apply functions and plot</h1>
@@ -692,22 +706,61 @@ Note
 <li>Call this summarized dataset <code>rain_df</code>.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>rain_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2014</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year, city_name) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_rainfall =</span> <span class="fu">round</span>(<span class="fu">sample_mean</span>(rainfall), <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">std_dev =</span> <span class="fu">round</span>(<span class="fu">sample_sd</span>(rainfall), <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_bound =</span> <span class="fu">round</span>(<span class="fu">calculate_CI</span>(rainfall, <span class="at">conf =</span> <span class="fl">0.95</span>)[<span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_bound =</span> <span class="fu">round</span>(<span class="fu">calculate_CI</span>(rainfall, <span class="at">conf =</span> <span class="fl">0.95</span>)[<span class="dv">2</span>], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by year and city_name.
+ℹ Output is grouped by year.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(year, city_name))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
 </div>
 </section>
 <section id="part-4b-tasks" class="level3">
 <h3 class="anchored" data-anchor-id="part-4b-tasks">Part 4B: Tasks</h3>
 <p>Using the <code>rain_df</code>, plots the estimates of mean rainfall and the 95% confidence intervals on the same plot. There should be a separate faceted plot for each city. Think about using <code>ggplot()</code> with both <code>geom_point()</code> (and <code>geom_line()</code> to connect the points) for the means and <code>geom_errorbar()</code> for the lower and upper bounds of the confidence interval. Check <a href="https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html" class="uri">https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html</a> and/or the official documentation <a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_linerange.html</a> for examples of how to use <code>geom_errorbar()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.factor</span>(rain_df<span class="sc">$</span>city_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] BRISBANE  CANBERRA  MELBOURNE PERTH     SYDNEY    BRISBANE  CANBERRA 
+ [8] MELBOURNE PERTH     SYDNEY    BRISBANE  CANBERRA  MELBOURNE PERTH    
+[15] SYDNEY    BRISBANE  CANBERRA  MELBOURNE PERTH     SYDNEY    BRISBANE 
+[22] CANBERRA  MELBOURNE PERTH     SYDNEY    BRISBANE  CANBERRA  MELBOURNE
+[29] PERTH     SYDNEY   
+Levels: BRISBANE CANBERRA MELBOURNE PERTH SYDNEY</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    rain_df, </span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_rainfall, <span class="at">ymin =</span> lower_bound, <span class="at">ymax =</span> upper_bound, <span class="at">color =</span> city_name)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_errorbar</span>()<span class="sc">+</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_rainfall))<span class="sc">+</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> city_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 </section>
 <section id="r-session-information" class="level1">
 <h1>R session information</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
  setting  value
@@ -719,7 +772,7 @@ Note
  collate  English_United States.utf8
  ctype    English_United States.utf8
  tz       America/New_York
- date     2026-09-28
+ date     2026-09-29
  pandoc   3.10 @ c:\\Users\\mjaco\\AppData\\Local\\Programs\\Positron\\resources\\app\\quarto\\bin\\tools/ (via rmarkdown)
  quarto   1.10.18 @ c:\\Users\\mjaco\\AppData\\Local\\Programs\\Positron\\RESOUR~1\\app\\quarto\\bin\\quarto.exe
 
