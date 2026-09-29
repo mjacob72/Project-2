@@ -189,7 +189,8 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="part-1a-exponential-transformation">Part 1A: Exponential transformation</h3>
 <p>The exponential of a number can be written as an infinite series expansion of the form <span class="math display">\[
 \exp(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
-\]</span>Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.</p>
+\]</span></p>
+<p>Of course, we cannot compute an infinite series by the end of this term and so we must truncate it at a certain point in the series. The truncated sum of terms represents an approximation to the true exponential, but the approximation may be usable.</p>
 <p>Write a (function that computes the exponential of a number using the truncated series expansion. The (function should take two arguments:</p>
 <ul>
 <li><p><code>x</code>: the number to be exponentiated</p></li>
@@ -259,8 +260,13 @@ Note
 <section id="part-1b-sample-mean-and-sample-standard-deviation" class="level3">
 <h3 class="anchored" data-anchor-id="part-1b-sample-mean-and-sample-standard-deviation">Part 1B: Sample mean and sample standard deviation</h3>
 <p>Next, write two functions called <code>sample_mean()</code> and <code>sample_sd()</code> that takes as input a vector of data of length <span class="math inline">\(N\)</span> and calculates the sample average and sample standard deviation for the set of <span class="math inline">\(N\)</span> observations.</p>
-<p>$${x} = _{i=1}^n x_i</p>
-<p><span class="math display">\[ \]</span> s = $$ As a primer, the <span class="math inline">\(\sum_{i = 1}^3 x_i\)</span> is equivalent to doing the sum of <span class="math inline">\(x_i\)</span> starting from <span class="math inline">\(i = 1\)</span>, increasing <span class="math inline">\(i\)</span> by 1 each then, up to when <span class="math inline">\(i = 3\)</span>. That is, <span class="math inline">\(x_1 + x_2 + x_3\)</span>.</p>
+<p><span class="math display">\[
+\bar{x} = \frac{1}{N} \sum_{i=1}^n x_i
+\]</span></p>
+<p><span class="math display">\[
+s = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (x_i - \overline{x})^2}
+\]</span></p>
+<p>As a primer, the <span class="math inline">\(\sum_{i = 1}^3 x_i\)</span> is equivalent to doing the sum of <span class="math inline">\(x_i\)</span> starting from <span class="math inline">\(i = 1\)</span>, increasing <span class="math inline">\(i\)</span> by 1 each then, up to when <span class="math inline">\(i = 3\)</span>. That is, <span class="math inline">\(x_1 + x_2 + x_3\)</span>.</p>
 <p>Include at least one example of output using your functions.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -357,13 +363,13 @@ Note
 <li>Returns a named vector of length 2, where the first value is the <code>lower_bound</code>, the second value is the <code>upper_bound</code>.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>calculate_CI <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">conf =</span> <span class="fl">0.95</span>) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>calculate_CI <span class="ot">&lt;-</span> <span class="cf">function</span>(valu, <span class="at">conf =</span> <span class="fl">0.95</span>) {</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    alpha <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> conf)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    degrees_freedom <span class="ot">&lt;-</span> (<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    degrees_freedom <span class="ot">&lt;-</span> (<span class="fu">length</span>(valu) <span class="sc">-</span> <span class="dv">1</span>)</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p =</span> alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="at">df =</span> degrees_freedom, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    adjusted_tscore <span class="ot">&lt;-</span> t_score <span class="sc">*</span> (<span class="fu">sample_sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)))</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    lower <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(x) <span class="sc">-</span> adjusted_tscore</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    upper <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(x) <span class="sc">+</span> adjusted_tscore</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    adjusted_tscore <span class="ot">&lt;-</span> t_score <span class="sc">*</span> (<span class="fu">sample_sd</span>(valu)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(valu)))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    lower <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(valu) <span class="sc">-</span> adjusted_tscore</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    upper <span class="ot">&lt;-</span> <span class="fu">sample_mean</span>(valu) <span class="sc">+</span> adjusted_tscore</span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(lower, upper)) </span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -374,28 +380,15 @@ Note
 <pre><code>[1] 4.119967 5.293826</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirmation test</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#try_attempt &lt;- t.test(fit_test)</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#try_attempt$conf.int[1] # lower bound</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#try_attempt$conf.int[2] # upper bound</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>test_attempt <span class="ot">&lt;-</span> <span class="fu">lm</span>(fit_test <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(test_attempt, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>test_attempt <span class="ot">&lt;-</span> <span class="fu">lm</span>(fit_test <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(test_attempt, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               2.5 %   97.5 %
 (Intercept) 4.119967 5.293826</code></pre>
 </div>
 </div>
 <p>Include example of output from your (function showing the output when using two different levels of <code>conf</code>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you want to check if your (function output matches an existing (function in R, consider a vector <span class="math inline">\(x\)</span> of length <span class="math inline">\(N\)</span> and see if the following two code chunks match.</p>
+<p>$$ ::: callout-note If you want to check if your (function output matches an existing (function in R, consider a vector <span class="math inline">\(x\)</span> of length <span class="math inline">\(N\)</span> and see if the following two code chunks match.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_CI</span>(x, <span class="at">conf =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -403,16 +396,12 @@ Note
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(x <span class="sc">~</span> <span class="dv">1</span>, dat)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate a 95% confidence interval</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>Calculate a <span class="dv">95</span>% confidence interval</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</div>
-</section>
-</section>
-<section id="part-2-wrangling-data" class="level1">
-<h1>Part 2: Wrangling data</h1>
+<p>::: $$ # Part 2: Wrangling data</p>
 <p>In this part, we will practice our wrangling skills with the tidyverse that we learned about in module 1.</p>
+</section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The two datasets for this part of the assignment comes from <a href="https://www.tidytuesday.com">TidyTuesday</a>. Specifically, we will use the following data from January 2020, which I have provided for you below:</p>
@@ -602,13 +591,6 @@ Note
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>inst</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
-</div>
 </section>
 <section id="part-3b-plotting-rainfall-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="part-3b-plotting-rainfall-over-time">Part 3B: Plotting rainfall over time</h3>
@@ -628,10 +610,10 @@ Note
 </div>
 <p>The following code plots the data from one city (<code>city_name == "PERTH"</code>) in a given year (<code>year == 2000</code>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(city_name <span class="sc">==</span> <span class="st">"PERTH"</span>, year <span class="sc">==</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(rainfall))) <span class="sc">+</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(city_name <span class="sc">==</span> <span class="st">"PERTH"</span>, year <span class="sc">==</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(rainfall))) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>While this code is useful, it only provides us information on one city in one year. We could cut and paste this code to look at other cities/years, but that can be error prone and just plain messy.</p>
 <p>The aim here is to <strong>design</strong> and <strong>implement</strong> a function that can be re-used to visualize all of the data in this dataset.</p>
@@ -647,9 +629,6 @@ Note
 <li><p>Present the code for your function in the R markdown document.</p></li>
 <li><p>Include at least one example of output from your function.</p></li>
 </ol>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </section>
 </section>
 <section id="part-4-apply-functions-and-plot" class="level1">
@@ -663,22 +642,22 @@ Note
 <li>Call this summarized dataset <code>rain_df</code>.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="part-4b-tasks" class="level3">
 <h3 class="anchored" data-anchor-id="part-4b-tasks">Part 4B: Tasks</h3>
 <p>Using the <code>rain_df</code>, plots the estimates of mean rainfall and the 95% confidence intervals on the same plot. There should be a separate faceted plot for each city. Think about using <code>ggplot()</code> with both <code>geom_point()</code> (and <code>geom_line()</code> to connect the points) for the means and <code>geom_errorbar()</code> for the lower and upper bounds of the confidence interval. Check <a href="https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html" class="uri">https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html</a> and/or the official documentation <a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_linerange.html</a> for examples of how to use <code>geom_errorbar()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your solution here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="r-session-information" class="level1">
 <h1>R session information</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
  setting  value
@@ -690,7 +669,7 @@ Note
  collate  English_United States.utf8
  ctype    English_United States.utf8
  tz       America/New_York
- date     2026-09-24
+ date     2026-09-28
  pandoc   3.10 @ c:\\Users\\mjaco\\AppData\\Local\\Programs\\Positron\\resources\\app\\quarto\\bin\\tools/ (via rmarkdown)
  quarto   1.10.18 @ c:\\Users\\mjaco\\AppData\\Local\\Programs\\Positron\\RESOUR~1\\app\\quarto\\bin\\quarto.exe
 
