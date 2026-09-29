@@ -183,13 +183,13 @@ t_score <- qt(p = alpha / 2, df = degrees_freedom, lower.tail = FALSE)
 3.  Returns a named vector of length 2, where the first value is the `lower_bound`, the second value is the `upper_bound`.
 
 ```{r}
-calculate_CI <- function(valu, conf = 0.95) {
+calculate_CI <- function(inp, conf = 0.95) {
     alpha <- (1 - conf)
-    degrees_freedom <- (length(valu) - 1)
+    degrees_freedom <- (length(inp) - 1)
     t_score <- qt(p = alpha / 2, df = degrees_freedom, lower.tail = FALSE)
-    adjusted_tscore <- t_score * (sample_sd(valu)/sqrt(length(valu)))
-    lower <- sample_mean(valu) - adjusted_tscore
-    upper <- sample_mean(valu) + adjusted_tscore
+    adjusted_tscore <- t_score * (sample_sd(inp)/sqrt(length(inp)))
+    lower <- sample_mean(inp) - adjusted_tscore
+    upper <- sample_mean(inp) + adjusted_tscore
     return(c(lower, upper)) 
 }
 
@@ -231,9 +231,9 @@ In this part, we will practice our wrangling skills with the tidyverse that we l
 The two datasets for this part of the assignment comes from [TidyTuesday](https://www.tidytuesday.com). Specifically, we will use the following data from January 2020, which I have provided for you below:
 
 ```{r, eval=FALSE}
-tuesdata <- tidytuesdayR::tt_load("2020-01-07")
-rainfall <- tuesdata$rainfall
-temperature <- tuesdata$temperature
+#tuesdata <- tidytuesdayR::tt_load("2020-01-07")
+#rainfall <- tuesdata$rainfall
+#temperature <- tuesdata$temperature
 ```
 
 However, to avoid re-downloading data, we will check to see if those files already exist using an `if()` statement:
@@ -414,7 +414,7 @@ city_year <- function(cityname, recorded_year) {
     
     # Create histogram
     ggplot(subset_data, aes(log(rainfall)))+
-    geom_histogram()+
+    geom_histogram(fill = "blue", color = "gray")+
     labs(title = paste("Total log(rain) in", cityname, "for", recorded_year))
 }
 
@@ -437,7 +437,18 @@ In this part, we will apply the functions we wrote in Part 1 to our rainfall dat
 3.  Call this summarized dataset `rain_df`.
 
 ```{r}
-# Add your solution here
+rain_df <- df %>%
+    filter(year >= 2014) %>%
+    group_by(year, city_name) %>%
+    summarise(
+        avg_rainfall = round(sample_mean(rainfall), digits = 2),
+        std_dev = round(sample_sd(rainfall), digits = 2),
+        lower_bound = round(calculate_CI(rainfall, conf = 0.95)[1], digits = 2),
+        upper_bound = round(calculate_CI(rainfall, conf = 0.95)[2], digits = 2)
+    )
+
+    
+
 ```
 
 ### Part 4B: Tasks
