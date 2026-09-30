@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Leonardo Collado Torres">
+<meta name="author" content="Matthew Jacoby">
 <meta name="description" content="Exploring temperature and rainfall in Australia">
 
 <title>Project 2</title>
@@ -133,20 +133,15 @@ window.Quarto = {
 
 <div class="quarto-title-meta-author">
   <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliations</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
-    <p class="author"><a href="http://lcolladotor.github.io/">Leonardo Collado Torres</a> </p>
+    <p class="author"><a href="http://mjacob72.github.io/">Matthew Jacoby</a> </p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
-            <a href="https://libd.org/">
-            Lieber Institute for Brain Development
-            </a>
-          </p>
-        <p class="affiliation">
-            <a href="https://publichealth.jhu.edu/departments/biostatistics">
-            Johns Hopkins Bloomberg School of Public Health Department of Biostatistics
+            <a href="https://publichealth.jhu.edu/departments/molecular-microbiology-and-immunology">
+            Department of Molecular Microbilogy and Immunology
             </a>
           </p>
       </div>
@@ -388,7 +383,17 @@ Note
 </div>
 </div>
 <p>Include example of output from your (function showing the output when using two different levels of <code>conf</code>.</p>
-<p>$$ ::: callout-note If you want to check if your (function output matches an existing (function in R, consider a vector <span class="math inline">\(x\)</span> of length <span class="math inline">\(N\)</span> and see if the following two code chunks match.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you want to check if your (function output matches an existing (function in R, consider a vector <span class="math inline">\(x\)</span> of length <span class="math inline">\(N\)</span> and see if the following two code chunks match.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_CI</span>(x, <span class="at">conf =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -399,9 +404,13 @@ Note
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>Calculate a <span class="dv">95</span>% confidence interval</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>::: $$ # Part 2: Wrangling data</p>
-<p>In this part, we will practice our wrangling skills with the tidyverse that we learned about in module 1.</p>
+</div>
+</div>
 </section>
+</section>
+<section id="part-2-wrangling-data" class="level1">
+<h1>Part 2: Wrangling data</h1>
+<p>In this part, we will practice our wrangling skills with the tidyverse that we learned about in module 1.</p>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The two datasets for this part of the assignment comes from <a href="https://www.tidytuesday.com">TidyTuesday</a>. Specifically, we will use the following data from January 2020, which I have provided for you below:</p>
@@ -582,7 +591,12 @@ Note
 <span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_line</span>()<span class="sc">+</span></span>
 <span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span> city_name)<span class="sc">+</span></span>
-<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_light</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="sc">+</span><span class="fl">1.0</span>)</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Min/Max Temperatures in Australian Cities (2014-2019)"</span></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -686,7 +700,7 @@ Note
 <section id="error-test-eval-false-to-allow-page-to-render" class="level1">
 <h1>Error test (eval = FALSE to allow page to render)</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">city_year</span>(<span class="st">"PERTH"</span>, <span class="dv">2053</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#city_year("PERTH", 2053)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="example-output" class="level1">
@@ -713,39 +727,36 @@ Note
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_rainfall =</span> <span class="fu">round</span>(<span class="fu">sample_mean</span>(rainfall), <span class="at">digits =</span> <span class="dv">2</span>),</span>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">std_dev =</span> <span class="fu">round</span>(<span class="fu">sample_sd</span>(rainfall), <span class="at">digits =</span> <span class="dv">2</span>),</span>
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_bound =</span> <span class="fu">round</span>(<span class="fu">calculate_CI</span>(rainfall, <span class="at">conf =</span> <span class="fl">0.95</span>)[<span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">2</span>),</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_bound =</span> <span class="fu">round</span>(<span class="fu">calculate_CI</span>(rainfall, <span class="at">conf =</span> <span class="fl">0.95</span>)[<span class="dv">2</span>], <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has regrouped the output.
-ℹ Summaries were computed grouped by year and city_name.
-ℹ Output is grouped by year.
-ℹ Use `summarise(.groups = "drop_last")` to silence this message.
-ℹ Use `summarise(.by = c(year, city_name))` for per-operation grouping
-  (`?dplyr::dplyr_by`) instead.</code></pre>
-</div>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_bound =</span> <span class="fu">round</span>(<span class="fu">calculate_CI</span>(rainfall, <span class="at">conf =</span> <span class="fl">0.95</span>)[<span class="dv">2</span>], <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">.groups =</span> <span class="st">"drop_last"</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="part-4b-tasks" class="level3">
 <h3 class="anchored" data-anchor-id="part-4b-tasks">Part 4B: Tasks</h3>
 <p>Using the <code>rain_df</code>, plots the estimates of mean rainfall and the 95% confidence intervals on the same plot. There should be a separate faceted plot for each city. Think about using <code>ggplot()</code> with both <code>geom_point()</code> (and <code>geom_line()</code> to connect the points) for the means and <code>geom_errorbar()</code> for the lower and upper bounds of the confidence interval. Check <a href="https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html" class="uri">https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html</a> and/or the official documentation <a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_linerange.html</a> for examples of how to use <code>geom_errorbar()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.factor</span>(rain_df<span class="sc">$</span>city_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] BRISBANE  CANBERRA  MELBOURNE PERTH     SYDNEY    BRISBANE  CANBERRA 
- [8] MELBOURNE PERTH     SYDNEY    BRISBANE  CANBERRA  MELBOURNE PERTH    
-[15] SYDNEY    BRISBANE  CANBERRA  MELBOURNE PERTH     SYDNEY    BRISBANE 
-[22] CANBERRA  MELBOURNE PERTH     SYDNEY    BRISBANE  CANBERRA  MELBOURNE
-[29] PERTH     SYDNEY   
-Levels: BRISBANE CANBERRA MELBOURNE PERTH SYDNEY</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    rain_df, </span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_rainfall, <span class="at">ymin =</span> lower_bound, <span class="at">ymax =</span> upper_bound, <span class="at">color =</span> city_name)</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_errorbar</span>()<span class="sc">+</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_rainfall))<span class="sc">+</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> city_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>rain_df <span class="ot">&lt;-</span> rain_df <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">city_name =</span> <span class="fu">str_to_title</span>(<span class="fu">str_to_lower</span>(city_name)))</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    rain_df, </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_rainfall, <span class="at">ymin =</span> lower_bound, <span class="at">ymax =</span> upper_bound, <span class="at">color =</span> city_name)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_errorbar</span>()<span class="sc">+</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_rainfall))<span class="sc">+</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> city_name)<span class="sc">+</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="sc">+</span><span class="fl">1.0</span>)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">+</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Average Annual Rainfall in Australian Cities (2014-2019)"</span>,</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Decreasing trend in annual rainfall."</span>,</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Average Rainfall (in)"</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">+</span></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_discrete</span>(</span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"City"</span></span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -759,8 +770,8 @@ Levels: BRISBANE CANBERRA MELBOURNE PERTH SYDNEY</code></pre>
 <section id="r-session-information" class="level1">
 <h1>R session information</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
  setting  value
@@ -772,7 +783,7 @@ Levels: BRISBANE CANBERRA MELBOURNE PERTH SYDNEY</code></pre>
  collate  English_United States.utf8
  ctype    English_United States.utf8
  tz       America/New_York
- date     2026-09-29
+ date     2026-09-30
  pandoc   3.10 @ c:\\Users\\mjaco\\AppData\\Local\\Programs\\Positron\\resources\\app\\quarto\\bin\\tools/ (via rmarkdown)
  quarto   1.10.18 @ c:\\Users\\mjaco\\AppData\\Local\\Programs\\Positron\\RESOUR~1\\app\\quarto\\bin\\quarto.exe
 

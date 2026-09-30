@@ -1,15 +1,12 @@
 ---
 title: "Project 2"
 author:
-  - name: Leonardo Collado Torres
-    url: http://lcolladotor.github.io/
+  - name: Matthew Jacoby
+    url: http://mjacob72.github.io/
     affiliations:
-      - id: libd
-        name: Lieber Institute for Brain Development
-        url: https://libd.org/
-      - id: jhsph
-        name: Johns Hopkins Bloomberg School of Public Health Department of Biostatistics
-        url: https://publichealth.jhu.edu/departments/biostatistics
+      - id: JHU BSPH MMI
+        name: Department of Molecular Microbilogy and Immunology
+        url: https://publichealth.jhu.edu/departments/molecular-microbiology-and-immunology  
 description: "Exploring temperature and rainfall in Australia"
 categories: [project 2, projects]
 ---
@@ -205,7 +202,7 @@ confint(test_attempt, level = 0.95)
 
 Include example of output from your (function showing the output when using two different levels of `conf`.
 
-$$
+
 ::: callout-note
 If you want to check if your (function output matches an existing (function in R, consider a vector $x$ of length $N$ and see if the following two code chunks match.
 
@@ -221,7 +218,7 @@ Calculate a 95% confidence interval
 confint(fit, level = 0.95)
 ```
 :::
-$$
+
 # Part 2: Wrangling data
 
 In this part, we will practice our wrangling skills with the tidyverse that we learned about in module 1.
@@ -353,7 +350,12 @@ ggplot(temp_long, aes(x = year, y = temperature, color = min_max))+
 geom_point()+
 geom_line()+
 facet_wrap(~ city_name)+
-theme_light()
+theme(
+    axis.text.x = element_text(angle = 45, hjust = +1.0)
+)+
+labs(
+    title = "Min/Max Temperatures in Australian Cities (2014-2019)"
+)
 
 ```
 
@@ -429,7 +431,7 @@ city_year("Sydney", 2014)
 
 # Error test (eval = FALSE to allow page to render)
 ```{r, eval = FALSE}
-city_year("PERTH", 2053)
+#city_year("PERTH", 2053)
 ```
 
 
@@ -457,8 +459,10 @@ rain_df <- df %>%
         avg_rainfall = round(sample_mean(rainfall), digits = 2),
         std_dev = round(sample_sd(rainfall), digits = 2),
         lower_bound = round(calculate_CI(rainfall, conf = 0.95)[1], digits = 2),
-        upper_bound = round(calculate_CI(rainfall, conf = 0.95)[2], digits = 2)
-    )
+        upper_bound = round(calculate_CI(rainfall, conf = 0.95)[2], digits = 2),
+        .groups = "drop_last"
+    ) %>%
+        ungroup()
 ```
 
 ### Part 4B: Tasks
@@ -466,7 +470,8 @@ rain_df <- df %>%
 Using the `rain_df`, plots the estimates of mean rainfall and the 95% confidence intervals on the same plot. There should be a separate faceted plot for each city. Think about using `ggplot()` with both `geom_point()` (and `geom_line()` to connect the points) for the means and `geom_errorbar()` for the lower and upper bounds of the confidence interval. Check <https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html> and/or the official documentation <https://ggplot2.tidyverse.org/reference/geom_linerange.html> for examples of how to use `geom_errorbar()`.
 
 ```{r}
-as.factor(rain_df$city_name)
+rain_df <- rain_df %>%
+    mutate(city_name = str_to_title(str_to_lower(city_name)))
 ggplot(
     rain_df, 
     aes(x = year, y = avg_rainfall, ymin = lower_bound, ymax = upper_bound, color = city_name)
@@ -474,7 +479,17 @@ ggplot(
     geom_errorbar()+
     geom_point(aes(x = year, y = avg_rainfall))+
     geom_line()+
-    facet_grid(~ city_name)
+    facet_grid(~ city_name)+
+    theme(axis.text.x = element_text(angle = 45, hjust = +1.0)
+    )+
+    labs(
+        title = "Average Annual Rainfall in Australian Cities (2014-2019)",
+        subtitle = "Decreasing trend in annual rainfall.",
+        y = "Average Rainfall (in)"
+    )+
+    scale_color_discrete(
+        name = "City"
+    )
     
 ```
 
