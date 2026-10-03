@@ -67,13 +67,22 @@ Include at least one example of output using your (function.
 :::
 
 ```{r}
+# Define a function that approximates exp(x) using a truncated series
 test_exp <- function(x, k) {
+
+    # Initialize result with the constant term (1)
     val <- 1
+
+    # Add terms from x^1/1! through x^k/k!
     if (k > 0){
         for (i in seq_len(k)) {
+
+            # Add current series term to running total
             val <- val + ((x^i)/factorial(i))
         }
     }
+
+    # Return approximated exponential value
     return(val)
 }
 
@@ -83,13 +92,13 @@ test_exp(2,5)
 # Confirmation with exp
 exp(2)
 
-#Test using test_exp
+# Test using test_exp
 test_exp(c(3,5,7),10)
+
 # Confirmation with exp
 exp(3)
 exp(5)
 exp(7)
-
 
 ```
 
@@ -118,40 +127,60 @@ Include at least one example of output using your functions.
 
 
 ```{r}
+# Function to calculate the sample mean
 sample_mean <- function(x) {
+
+    # Compute total sum of values
     tot_sum <- sum(x)
+
+    # Determine sample size
     big_n <- length(x)
+
+    # Calculate average
     averg <- tot_sum/big_n
+
+    # Return sample mean
     return(averg)
 }
 
-#Test using sample_mean
+# Test using sample_mean
 sample_mean(c(2,6,3,4,5,9,1,5,2,4,8))
+
 # Confirmation using mean
 mean(c(2,6,3,4,5,9,1,5,2,4,8))
+
 # Test using sample_mean
 sample_mean(c(324,334,354,345,341,322,347,362,342))
+
 # Confirmation using mean
 mean(c(324,334,354,345,341,322,347,362,342))
 
+# Function to calculate sample standard deviation
 sample_sd <- function(inp) {
+
+    # Calculate sample mean using custom function
     smpl_m <- sample_mean(inp)
+
+    # Determine sample size
     big_n <- length(inp)
-    
+
+    # Apply sample standard deviation formula
     st_dev <- sqrt(sum((inp - smpl_m)^2)/(big_n - 1))
+
+    # Return standard deviation
     return(st_dev)
 }
 
-#Test using sample_sd
+# Test using sample_sd
 sample_sd(c(2,6,3,4,5,9,1,5,2,4,8))
 
-#Confirmation using sd
+# Confirmation using sd
 sd(c(2,6,3,4,5,9,1,5,2,4,8))
 
-#Test using sample_sd
+# Test using sample_sd
 sample_sd(c(324,334,354,345,341,322,347,362,342))
 
-#Confirmation using sd
+# Confirmation using sd
 sd(c(324,334,354,345,341,322,347,362,342))
 ```
 
@@ -180,22 +209,41 @@ t_score <- qt(p = alpha / 2, df = degrees_freedom, lower.tail = FALSE)
 3.  Returns a named vector of length 2, where the first value is the `lower_bound`, the second value is the `upper_bound`.
 
 ```{r}
+# Function to calculate a confidence interval for the mean
 calculate_CI <- function(inp, conf = 0.95) {
+
+    # Determine alpha level
     alpha <- (1 - conf)
+
+    # Degrees of freedom
     degrees_freedom <- (length(inp) - 1)
+
+    # Critical t value
     t_score <- qt(p = alpha / 2, df = degrees_freedom, lower.tail = FALSE)
+
+    # Margin of error
     adjusted_tscore <- t_score * (sample_sd(inp)/sqrt(length(inp)))
+
+    # Lower confidence limit
     lower <- sample_mean(inp) - adjusted_tscore
+
+    # Upper confidence limit
     upper <- sample_mean(inp) + adjusted_tscore
-    return(c(lower, upper)) 
+
+    # Return confidence interval bounds
+    return(c(lower, upper))
 }
 
-# Test 
+# Test data vector
 fit_test <- c(2,6,3,4,5,9,1,5,2,4,8,7,2,3,6,5,8,1,2,5,3,7,8,4,5,2,3,7,4,9,8,2,4,5,3,5,1,2,7,6,3,4,5,8,6,8,7,4,3,4,9,4,5,6,3,5,2,4)
+
+# Calculate confidence interval
 calculate_CI(fit_test, conf = 0.95)
 
-# Confirmation test
+# Confirmation test using linear model
 test_attempt <- lm(fit_test ~ 1)
+
+# Built-in confidence interval
 confint(test_attempt, level = 0.95)
 
 ```
@@ -291,20 +339,28 @@ Using the `rainfall` and `temperature` data, perform the following steps and cre
 :::
 
 ```{r}
+# Load required packages
 library(tidyverse)
 library(dplyr)
 library(here)
 library(lubridate)
 
-temp_df <- rainfall %>% 
-    drop_na() %>%
-    mutate("date" = make_date(year, month, day)) %>%
-    select(!c(day, month)) %>%
-    mutate(city_name = toupper(city_name)) 
+# Clean rainfall data
+temp_df <- rainfall %>%
+    drop_na() %>%                         # Remove missing values
+    mutate("date" = make_date(year, month, day)) %>%   # Create Date column
+    select(!c(day, month)) %>%            # Remove day and month columns
+    mutate(city_name = toupper(city_name)) # Convert city names to uppercase
 
+# Join rainfall and temperature datasets
 df <- temp_df %>%
-    inner_join(temperature, by = c("city_name", "date"), relationship = "many-to-many")
+    inner_join(
+        temperature,
+        by = c("city_name", "date"),
+        relationship = "many-to-many"
+    )
 
+# View resulting data frame
 df
 
 ```
@@ -326,10 +382,12 @@ Use the functions in `ggplot2` package to make a line plot of the max and min te
 2.  Use a facet function to facet by `city_name` to show all cities in one figure.
 
 ```{r}
+# Load required libraries
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
-# Want to merge across by year and identify min and max for temp
+
+# Summarize annual minimum and maximum temperatures
 simpl_temp <- df %>%
     filter(year >= 2014) %>%
     group_by(year, city_name) %>%
@@ -339,6 +397,7 @@ simpl_temp <- df %>%
         .groups = "drop"
     )
 
+# Convert wide format to long format
 temp_long <- simpl_temp %>%
     pivot_longer(
         -c(city_name, year),
@@ -346,16 +405,17 @@ temp_long <- simpl_temp %>%
         values_to = "temperature"
     )
 
-ggplot(temp_long, aes(x = year, y = temperature, color = min_max))+
-geom_point()+
-geom_line()+
-facet_wrap(~ city_name)+
-theme(
-    axis.text.x = element_text(angle = 45, hjust = +1.0)
-)+
-labs(
-    title = "Min/Max Temperatures in Australian Cities (2014-2019)"
-)
+# Plot annual min/max temperatures
+ggplot(temp_long, aes(x = year, y = temperature, color = min_max)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ city_name) +
+    theme(
+        axis.text.x = element_text(angle = 45, hjust = +1.0)
+    ) +
+    labs(
+        title = "Min/Max Temperatures in Australian Cities (2014-2019)"
+    )
 
 ```
 
@@ -397,6 +457,7 @@ For this section,
 3.  Include at least one example of output from your function.
 
 ```{r}
+# Function to plot rainfall histogram for a city and year
 city_year <- function(cityname, recorded_year) {
     cityname <- toupper(cityname)
     subset_data <- df |>
@@ -452,6 +513,7 @@ In this part, we will apply the functions we wrote in Part 1 to our rainfall dat
 3.  Call this summarized dataset `rain_df`.
 
 ```{r}
+# Create yearly rainfall summary data frame
 rain_df <- df %>%
     filter(year >= 2014) %>%
     group_by(year, city_name) %>%
@@ -462,7 +524,7 @@ rain_df <- df %>%
         upper_bound = round(calculate_CI(rainfall, conf = 0.95)[2], digits = 2),
         .groups = "drop_last"
     ) %>%
-        ungroup()
+    ungroup()
 ```
 
 ### Part 4B: Tasks
@@ -470,27 +532,36 @@ rain_df <- df %>%
 Using the `rain_df`, plots the estimates of mean rainfall and the 95% confidence intervals on the same plot. There should be a separate faceted plot for each city. Think about using `ggplot()` with both `geom_point()` (and `geom_line()` to connect the points) for the means and `geom_errorbar()` for the lower and upper bounds of the confidence interval. Check <https://r-graphics.org/RECIPE-ANNOTATE-ERROR-BAR.html> and/or the official documentation <https://ggplot2.tidyverse.org/reference/geom_linerange.html> for examples of how to use `geom_errorbar()`.
 
 ```{r}
+# Convert city names to title case for plotting
 rain_df <- rain_df %>%
     mutate(city_name = str_to_title(str_to_lower(city_name)))
+
+# Plot mean rainfall with confidence intervals
 ggplot(
-    rain_df, 
-    aes(x = year, y = avg_rainfall, ymin = lower_bound, ymax = upper_bound, color = city_name)
-)+
-    geom_errorbar()+
-    geom_point(aes(x = year, y = avg_rainfall))+
-    geom_line()+
-    facet_grid(~ city_name)+
-    theme(axis.text.x = element_text(angle = 45, hjust = +1.0)
-    )+
+    rain_df,
+    aes(
+        x = year,
+        y = avg_rainfall,
+        ymin = lower_bound,
+        ymax = upper_bound,
+        color = city_name
+    )
+) +
+    geom_errorbar() +
+    geom_point(aes(x = year, y = avg_rainfall)) +
+    geom_line() +
+    facet_grid(~ city_name) +
+    theme(
+        axis.text.x = element_text(angle = 45, hjust = +1.0)
+    ) +
     labs(
         title = "Average Annual Rainfall in Australian Cities (2014-2019)",
         subtitle = "Decreasing trend in annual rainfall.",
         y = "Average Rainfall (in)"
-    )+
+    ) +
     scale_color_discrete(
         name = "City"
     )
-    
 ```
 
 # R session information
